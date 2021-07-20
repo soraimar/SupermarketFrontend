@@ -58,4 +58,18 @@ export async function getShoppingCar(setCar){
     }
 }
 
+async function deleteProductCar(product, setCar){
+    const carId = getCookie(nameCookie);
+    if (carId !== '') {
+        try {
+            debugger
+            const body = { products : [product] };
+            const response = await axios.get('http://localhost:3000/cars/delete_product/' + carId, body);
+            setCar(response.data);
+        } catch (e) {
+            console.error("error getting products", e);
+        }
+    }
+}
+
 export default Navigation;
