@@ -2,7 +2,8 @@ import "./Store.css";
 
 import axios from "axios";
 import {useEffect, useState} from "react";
-import { Card, Col,Row} from "antd";
+import {Button, Card, Col,Row} from "antd";
+import {getCookie, nameCookie} from "../../utils/cookie";
 const { Meta } = Card;
 
 function Store() {
@@ -21,12 +22,26 @@ function Store() {
                         >
                         <Meta title="Producto" description={product.description} />
                         <Meta title="Precio" description={"$" + product.price} />
+                        <Button onClick={() => addProductCar(product)} type="primary" shape="round"> Agregar </Button>
                     </Card>
                 </Col>
             })}
             </Row>
         </div>
     );
+}
+async function addProductCar(product){
+    const carId = getCookie(nameCookie);
+
+    if (carId !== ''){
+        try {
+            console.log(product)
+            const body = { products: [product._id] };
+            await axios.put('http://localhost:3000/cars/add_product/'+ carId , body)
+        }catch (e){
+            console.error("Cannot add product shopping car", e);
+        }
+    }
 }
 
 async function getProducts(setProducts){
