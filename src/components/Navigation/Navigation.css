@@ -1,0 +1,29 @@
+
+
+.logo {
+    position: relative;
+    display: block;
+    float: left;
+    width: 120px;
+    height: auto;
+}
+
+.carrito {
+    position: relative;
+    display: block;
+    float: right;
+    width: 50px;
+    height: 50px;
+    margin-top: -65px;
+}
+
+.carrito img {
+    width: 100%;
+}
+
+.menu {
+    width: 350px;
+}
+
+
+
