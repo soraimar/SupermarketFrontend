@@ -1,5 +1,5 @@
 import "./Navigation.css";
-import {Card, Dropdown, Menu} from "antd";
+import {Button, Card, Dropdown, Menu} from "antd";
 import {useState} from "react";
 import axios from "axios";
 import {getCookie,nameCookie} from "../../utils/cookie";
@@ -8,15 +8,16 @@ function Navigation() {
     const [car, setCar] = useState([])
     const menu =  <Menu  className="menu">
         <Menu.Item>Resumen</Menu.Item>
-        {car && car.products && car.products.map((currentCar) => {
+        {car && car.products && car.products.map((product) => {
             return  <Menu.Item>
                 <Card
                     hoverable
                     style={{width: 300}}
-                    cover={<img src={"https://" + currentCar.image} />}
+                    cover={<img src={"https://" + product.image} />}
                 >
-                    <p>{currentCar.description}</p>
-                    <p>{"$" + currentCar.price}</p>
+                    <Button onClick={() => deleteProductCar(product._id)} type="primary" shape="round"> Eliminar </Button>
+                    <p>{product.description}</p>
+                    <p>{"$" + product.price}</p>
                 </Card>
             </Menu.Item>
         })
@@ -58,16 +59,15 @@ export async function getShoppingCar(setCar){
     }
 }
 
-async function deleteProductCar(product, setCar){
+async function deleteProductCar(product){
     const carId = getCookie(nameCookie);
     if (carId !== '') {
         try {
             debugger
-            const body = { products : [product] };
-            const response = await axios.get('http://localhost:3000/cars/delete_product/' + carId, body);
-            setCar(response.data);
+            const body = { "products" : product };
+            await axios.put('http://localhost:3000/cars/delete_product/' + carId, body);
         } catch (e) {
-            console.error("error getting products", e);
+            console.error("error delete product ", e);
         }
     }
 }
