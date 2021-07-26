@@ -20,8 +20,8 @@ function Store() {
                         style={{ width: 240 }}
                         cover={<img alt="example" src={"https://" + product.image} />}
                         >
-                        <Meta title="Producto" description={product.description} />
-                        <Meta title="Precio" description={"$" + product.price} />
+                        <Meta description={product.description} />
+                        <Meta description={"$" + product.price} />
                         <Button onClick={() => addProductCar(product)} type="primary" shape="round"> Agregar </Button>
                     </Card>
                 </Col>
